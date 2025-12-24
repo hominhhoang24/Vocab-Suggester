@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vocab Suggester</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+
+  <body class="bg-light">
+    <div class="container py-5 fade-in">
+      <h1 class="mb-3">Vocab Suggester</h1>
+      <p class="lead">
+        Gợi ý từ vựng theo <strong>độ phức tạp</strong> và <strong>ngữ cảnh</strong>.
+      </p>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, msg in messages %}
+          <div class="alert alert-{{ 'warning' if category=='warning' else 'info' }}">
+            {{ msg }}
+          </div>
+        {% endfor %}
+      {% endif %}
+      {% endwith %}
+
+      <form method="post" action="{{ url_for('suggest') }}">
+        <div class="mb-3">
+          <label for="sentence" class="form-label">Nhập câu tiếng Anh</label>
+          <textarea
+            class="form-control"
+            id="sentence"
+            name="sentence"
+            rows="3"
+            placeholder="The movie was really good and interesting."
+            required></textarea>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <label for="focus_word" class="form-label">Từ muốn thay thế (tùy chọn)</label>
+            <input
+              class="form-control"
+              id="focus_word"
+              name="focus_word"
+              placeholder="good">
+          </div>
+
+          <div class="col-md-4">
+            <label for="pos_filter" class="form-label">Lọc theo từ loại</label>
+            <select class="form-select" id="pos_filter" name="pos_filter">
+              <option value="any" selected>Bất kỳ</option>
+              <option value="noun">Danh từ (noun)</option>
+              <option value="verb">Động từ (verb)</option>
+              <option value="adj">Tính từ (adj)</option>
+            </select>
+          </div>
+
+          <div class="col-md-4">
+            <label for="top_n" class="form-label">Số gợi ý</label>
+            <input
+              class="form-control"
+              id="top_n"
+              name="top_n"
+              value="5"
+              type="number"
+              min="1"
+              max="20">
+          </div>
+        </div>
+
+        <button class="btn btn-primary w-100" type="submit">
+          Gợi ý từ
+        </button>
+      </form>
+
+      <hr class="my-4">
+      <p class="text-muted small">
+        Gợi ý: nếu không nhập từ, hệ thống sẽ tự động chọn (động từ / tính từ đầu tiên).
+      </p>
+    </div>
+
+    <!-- JS -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>
