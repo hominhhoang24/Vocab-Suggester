@@ -1,4 +1,4 @@
-# Vocab Suggester (Flask)
+# Vocab Suggester
 
 Ứng dụng Flask gợi ý từ vựng theo **độ phức tạp** và **ngữ cảnh**.
 
@@ -10,7 +10,7 @@ python -m venv venv
 # Linux / macOS:
 source venv/bin/activate
 # Windows (PowerShell):
-venv\Scripts\Activate.ps1
+venv\Scripts\Activate
 
 pip install -r requirements.txt
 
@@ -23,3 +23,9 @@ import nltk
 nltk.download('wordnet')
 nltk.download('omw-1.4')
 PY
+```
+
+## Chạy ứng dụng
+
+```bash
+python app.py
